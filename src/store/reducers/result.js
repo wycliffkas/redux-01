@@ -1,7 +1,18 @@
-import * as actionTypes from "../actions";
+import * as actionTypes from "../actions/actionTypes";
 
 const intialState = {
   results: []
+};
+
+const deleteResult = (state, action) => {
+  const newArray = state.results.filter(
+    result => action.resultID !== result.id
+  );
+
+  return {
+    ...state,
+    results: newArray
+  };
 };
 
 const resultReducer = (state = intialState, action) => {
@@ -15,13 +26,7 @@ const resultReducer = (state = intialState, action) => {
         })
       };
     case actionTypes.DELETE_RESULT:
-      const newArray = state.results.filter(
-        result => action.resultID !== result.id
-      );
-      return {
-        ...state,
-        results: newArray
-      };
+      return deleteResult(state, action);
   }
   return state;
 };
